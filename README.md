@@ -18,3 +18,7 @@
 - **Forgot Password**: If you ever forget your password, Crypto Vault provides an easy recovery process to regain access to your wallet.
 
 Crypto Vault leverages the Solana network's speed and low transaction costs, offering a reliable solution for managing your digital assets securely.
+
+
+https://github.com/user-attachments/assets/c98e925a-fb8b-49c5-b667-9dc12ef0236d
+
