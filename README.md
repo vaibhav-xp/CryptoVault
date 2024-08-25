@@ -1,36 +1,20 @@
-This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
+# Crypto Vault
 
-## Getting Started
+**Crypto Vault** is a secure and user-friendly wallet built on the Solana blockchain. It allows you to manage your Solana assets with ease.
 
-First, run the development server:
+## Key Features:
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
-```
+- **Hold Currencies and Accounts**: Safely store your Solana tokens and manage multiple accounts within the wallet.
+- **Create Multiple Solana Accounts**: Easily create and manage multiple Solana accounts from a single wallet.
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+- **Send and Receive Transactions**: Quickly and securely send and receive SOL and other Solana-based tokens.
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+- **View Transaction Details**: Track your transactions with detailed information for every transfer.
 
-This project uses [`next/font`](https://nextjs.org/docs/basic-features/font-optimization) to automatically optimize and load Inter, a custom Google Font.
+- **Import Secret Key**: If you already have a Solana account, you can import it into Crypto Vault using your secret key.
 
-## Learn More
+- **Create a New Account**: Start fresh by creating a new Solana account directly within the wallet.
 
-To learn more about Next.js, take a look at the following resources:
+- **Forgot Password**: If you ever forget your password, Crypto Vault provides an easy recovery process to regain access to your wallet.
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
-
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js/) - your feedback and contributions are welcome!
-
-## Deploy on Vercel
-
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/deployment) for more details.
+Crypto Vault leverages the Solana network's speed and low transaction costs, offering a reliable solution for managing your digital assets securely.
