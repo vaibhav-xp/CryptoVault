@@ -1,3 +1,4 @@
+// src/components/Home/SelectAccountPopup/index.tsx
 import { Account } from "@/context/types";
 import useSolana from "@/hooks/useSolana";
 import useWallet from "@/hooks/useWallet";
@@ -16,6 +17,12 @@ import { Dispatch, SetStateAction, useEffect, useRef, useState } from "react";
 import { toast } from "react-toastify";
 import SingleAccount from "./SingleAccount";
 import ShowPrivateKey from "./ShowPrivateKey";
+
+interface NewData {
+  password: string;
+  seed: string;
+  accounts: string[];
+}
 
 interface Props {
   open: boolean;
@@ -39,15 +46,18 @@ const SelectAnAccount = ({ open, setOpen }: Props) => {
     try {
       const account = createAccount(seed);
       if (!account) return toast.error("Unable to create an account");
-      const newData = {
+
+      const newData: NewData = {
         password,
         seed,
         accounts: [],
       };
       newData.accounts = accounts.map((acc) => acc.name);
       newData.accounts.push(`Account ${accounts.length + 1}`);
+
       const response = await baseApi.post("/api/data/encrypt", newData);
       localStorage.setItem("cryptoVault", response?.data?.data?.encryptedData);
+
       const newAccount: Account = {
         privateKey: account.privateKey,
         publicKey: account.publicKey,

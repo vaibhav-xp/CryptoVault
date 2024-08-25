@@ -17,7 +17,7 @@ interface Account {
 }
 
 interface UseSolanaReturn {
-  createAccount: (seed: string) => Account;
+  createAccount: (seed: string, acc_no?: number) => Account;
   getBalance: (publicKeyStr: string) => Promise<number>;
   isValidSolanaPublicKey: (publicKeyStr: string) => boolean;
   sendTransaction: (
