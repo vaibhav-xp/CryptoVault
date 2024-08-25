@@ -2,11 +2,11 @@
 
 import useMnemonic from "@/hooks/useMnemonic";
 import { tips } from "@/utils/constants";
+import ContentCopyIcon from "@mui/icons-material/ContentCopy";
 import VisibilityOffIcon from "@mui/icons-material/VisibilityOff";
 import {
   Box,
   Button,
-  CircularProgress,
   Grid,
   List,
   ListItem,
@@ -14,8 +14,7 @@ import {
   Paper,
   Typography,
 } from "@mui/material";
-import { useEffect, useRef, useState } from "react";
-
+import { useEffect, useState } from "react";
 import useCopied from "@/hooks/useCopied";
 import CustomStepper from "../../../shared/CustomStepper";
 import { WalletCreationTypes } from "../types";
@@ -23,42 +22,23 @@ import { WalletCreationTypes } from "../types";
 const CreateSecretPhrase = ({ setStep, setData }: WalletCreationTypes) => {
   const [seedPhrase, setSeedPhrase] = useState<string[]>([]);
   const { genMnemonic } = useMnemonic();
-  const [toggleSeedPhrase, setToggleSeedPhrase] = useState<boolean>(true);
-  const [spinnerLoading, setSpinnerLoading] = useState<boolean>(false);
-  const timerRef = useRef<any>(null);
+  const [isSeedPhraseVisible, setIsSeedPhraseVisible] =
+    useState<boolean>(false);
   const { copy } = useCopied();
-
-  const handleMouseDown = () => {
-    if (toggleSeedPhrase) {
-      setSpinnerLoading(true);
-      timerRef.current = setTimeout(() => {
-        setSpinnerLoading(false);
-        setToggleSeedPhrase((prev) => !prev);
-      }, 3000);
-    } else {
-      setStep();
-    }
-  };
-
-  const handleMouseUp = () => {
-    if (timerRef.current) {
-      clearTimeout(timerRef.current);
-    }
-    setSpinnerLoading(false);
-  };
-
-  const handleMouseLeave = () => {
-    if (timerRef.current) {
-      clearTimeout(timerRef.current);
-    }
-    setSpinnerLoading(false);
-  };
 
   useEffect(() => {
     const mnemonic = genMnemonic();
     setSeedPhrase(mnemonic.split(" "));
     setData((prev) => ({ ...prev, mnemonic }));
   }, []);
+
+  const handleCopy = () => {
+    copy(seedPhrase);
+  };
+
+  const handleVisibilityToggle = () => {
+    setIsSeedPhraseVisible(!isSeedPhraseVisible);
+  };
 
   return (
     <Paper
@@ -130,30 +110,28 @@ const CreateSecretPhrase = ({ setStep, setData }: WalletCreationTypes) => {
           minHeight: 195,
           position: "relative",
           overflow: "hidden",
-          transition: "height 0.5s ease",
         }}
       >
-        <Box
-          component={"div"}
-          sx={{
-            background: "rgba(0, 0, 0, 0.7)",
-            backdropFilter: "blur(3px)",
-            height: "100%",
-            width: "100%",
-            position: "absolute",
-            top: 0,
-            left: 0,
-            display: toggleSeedPhrase ? "grid" : "none",
-            gap: 2,
-            placeContent: "center",
-            transition: "opacity 0.5s ease",
-            opacity: toggleSeedPhrase ? 1 : 0,
-          }}
-        >
-          <VisibilityOffIcon sx={{ margin: "0 auto" }} fontSize="large" />
-          <Typography>Make sure nobody is looking</Typography>
-        </Box>
-
+        {!isSeedPhraseVisible && (
+          <Box
+            component={"div"}
+            sx={{
+              background: "rgba(0, 0, 0, 0.7)",
+              backdropFilter: "blur(3px)",
+              height: "100%",
+              width: "100%",
+              position: "absolute",
+              top: 0,
+              left: 0,
+              display: "grid",
+              gap: 2,
+              placeContent: "center",
+            }}
+          >
+            <VisibilityOffIcon sx={{ margin: "0 auto" }} fontSize="large" />
+            <Typography>Make sure nobody is looking</Typography>
+          </Box>
+        )}
         <Button
           sx={{
             height: "100%",
@@ -161,7 +139,7 @@ const CreateSecretPhrase = ({ setStep, setData }: WalletCreationTypes) => {
             position: "absolute",
             top: 0,
             left: 0,
-            display: toggleSeedPhrase ? "none" : "block",
+            display: !isSeedPhraseVisible ? "none" : "block",
             borderRadius: 0,
           }}
           onClick={() => copy(seedPhrase)}
@@ -187,6 +165,45 @@ const CreateSecretPhrase = ({ setStep, setData }: WalletCreationTypes) => {
         </Grid>
       </Paper>
 
+      <Box
+        component={"div"}
+        sx={{
+          display: "flex",
+          alignItems: "center",
+          justifyContent: "center",
+          gap: "1rem",
+        }}
+      >
+        <Typography
+          component="p"
+          onClick={handleCopy}
+          sx={{
+            display: "flex",
+            alignItems: "center",
+            justifyContent: "center",
+            gap: ".5rem",
+            cursor: "pointer",
+          }}
+        >
+          Copy <ContentCopyIcon fontSize="small" />
+        </Typography>
+        <Typography
+          component="p"
+          onClick={handleVisibilityToggle}
+          sx={{
+            display: "flex",
+            alignItems: "center",
+            justifyContent: "center",
+            gap: ".5rem",
+            cursor: "pointer",
+            width: "8rem",
+          }}
+        >
+          {isSeedPhraseVisible ? "Hide" : "Reveal"}{" "}
+          <VisibilityOffIcon fontSize="medium" />
+        </Typography>
+      </Box>
+
       <Button
         variant="contained"
         sx={{
@@ -196,20 +213,9 @@ const CreateSecretPhrase = ({ setStep, setData }: WalletCreationTypes) => {
           alignItems: "center",
           width: "320px",
         }}
-        onMouseDown={handleMouseDown}
-        onMouseUp={handleMouseUp}
-        onMouseLeave={handleMouseLeave}
+        onClick={() => setStep()}
       >
-        {spinnerLoading ? (
-          <>
-            <CircularProgress size={24} sx={{ marginRight: "8px" }} />
-            Holding for 3s...
-          </>
-        ) : toggleSeedPhrase ? (
-          "Reveal Secret Recovery Phrase"
-        ) : (
-          "Next"
-        )}
+        Next
       </Button>
     </Paper>
   );

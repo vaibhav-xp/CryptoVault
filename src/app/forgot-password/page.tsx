@@ -32,7 +32,7 @@ const Page = () => {
     <MainContainer component={"section"}>
       {step === 0 && (
         <EnterSecretPhrase setData={setData} setStep={() => setStep(1)}>
-          <CustomStepper activeStep={1} steps={stepper} />
+          <CustomStepper activeStep={0} steps={stepper} />
           <Typography variant="h1" margin={"1rem 0"}>
             Reset wallet
           </Typography>
