@@ -9,10 +9,7 @@ interface PasswordInputProps {
     onChange: (event: ChangeEvent<HTMLInputElement>) => void;
     onBlur: (event: React.FocusEvent<HTMLInputElement>) => void;
   };
-  form: {
-    errors: Record<string, string>;
-    touched: Record<string, boolean>;
-  };
+  form: any;
   label: string;
 }
 

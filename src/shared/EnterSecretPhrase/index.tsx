@@ -74,14 +74,6 @@ const EnterSecretPhrase = ({
                 form={formik}
                 label={(idx + 1).toString()}
                 field={formik.getFieldProps(idx.toString())}
-                error={
-                  formik.touched[idx.toString()] &&
-                  Boolean(formik.errors[idx.toString()])
-                }
-                helperText={
-                  formik.touched[idx.toString()] &&
-                  formik.errors[idx.toString()]
-                }
               />
             </Grid>
           ))}
